@@ -3,7 +3,13 @@ namespace App\lf8;
 
 class Router 
 {
-    function request_path()
+    private const NAMESPACE = 'App\lf8\\';
+    private const CONTROLLER = 'Controller';
+    private const INDEX = 'Index';
+    
+    private const BASE_CONTROLLER = 'AbstractController';
+
+    private function request_path()
     {
         $request_uri = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
         $script_name = explode('/', trim($_SERVER['SCRIPT_NAME'], '/'));
@@ -20,38 +26,38 @@ class Router
         }
         return $path;
     }
-    function route() 
+    public function route() 
     {
-        require_once('config.php');
         $path = $this->request_path();
         if($path === '/') 
         {
-            // get the filename for the indexController
-            // 
-            $ctrName = 'Index';
-            $fileName = self::fileExists(__DIR__.'/'.$ctrName.'.php',false);
-            if($fileName) 
-            {
-                echo $fileName;
-                require_once ($fileName);
-                $class = 'App\lf8\\'.$ctrName;
-                $index = new $class($nav);
-                echo $index->render();
-            }
+            $path=self::INDEX;
         }
-        else 
+        $file = $path . self::CONTROLLER. '.php';
+        $fileName = self::fileExists(__DIR__ . '/' . $file,false);
+        if(!$fileName)
         {
-            $fileName = self::fileExists(__DIR__.'/'.$path.'.php',false);
-            if($fileName)
-            {
-                require_once ($fileName);
-                $class = 'App\lf8\\'.$path;
-                $index = new $class($nav);
-                echo $index->render();
-            }
+            self::errorPage("Somthing went wrong on $path <br>FILE NOT FOUND");
+        } 
+        require_once('config.php');
+        require_once ($fileName);
+        $class = self::NAMESPACE . $path . self::CONTROLLER;
+        $index = new $class();
+        if(!is_subclass_of($index,self::NAMESPACE . self::BASE_CONTROLLER))
+        {
+            self::errorPage("Somthing went wrong on $path<br>Class must extend AbstractController");
         }
+        $index->setup($nav);
+        $index->build();
+        echo $index->render();
     }
-    function fileExists($fileName, $caseSensitive = true) {
+    private function errorPage($message) 
+    {
+        echo "<h1>ERROR</h1>"
+            . $message;
+        die();
+    }
+    private function fileExists($fileName, $caseSensitive = true) {
         if(file_exists(__DIR__.'/'.$fileName)) {
             return $fileName;
         }

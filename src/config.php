@@ -5,7 +5,7 @@ $db_passwort = 'root';
 
 
 $nav = array(
-    array('href'=> 'Index.php','caption'=>'Home'),
-    array('href'=> 'LibraryController.php','caption'=>'Library'),
-    array('href'=> 'DatamanagerController.php', 'caption' => 'Datenbank'));
+    array('href'=> 'Index','caption'=>'Home'),
+    array('href'=> 'Library','caption'=>'Library'),
+    array('href'=> 'Datamanager', 'caption' => 'Datenbank'));
 ?>
