@@ -34,10 +34,10 @@ class Router
             $path=self::INDEX;
         }
         $file = $path . self::CONTROLLER. '.php';
-        $fileName = self::fileExists(__DIR__ . '/' . $file,false);
+        $fileName = self::file_exists(__DIR__ . '/' . $file,false);
         if(!$fileName)
         {
-            self::errorPage("Somthing went wrong on $path <br>FILE NOT FOUND");
+            self::error_page("Somthing went wrong on $path <br>FILE NOT FOUND");
         } 
         require_once('config.php');
         require_once ($fileName);
@@ -45,19 +45,19 @@ class Router
         $index = new $class();
         if(!is_subclass_of($index,self::NAMESPACE . self::BASE_CONTROLLER))
         {
-            self::errorPage("Somthing went wrong on $path<br>Class must extend AbstractController");
+            self::error_page("Somthing went wrong on $path<br>Class must extend AbstractController");
         }
         $index->setup($nav);
         $index->build();
         echo $index->render();
     }
-    private function errorPage($message) 
+    private function error_page($message) 
     {
         echo "<h1>ERROR</h1>"
             . $message;
         die();
     }
-    private function fileExists($fileName, $caseSensitive = true) {
+    private function file_exists($fileName, $caseSensitive = true) {
         if(file_exists(__DIR__.'/'.$fileName)) {
             return $fileName;
         }
