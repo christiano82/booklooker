@@ -1,0 +1,14 @@
+{
+    "name": "efi21a/lf8_1",
+    "description": "Projekt arbeit in PHP bei Herrn Feldmann",
+    "type": "project",
+    "authors": [
+        {
+            "name": "haxli",
+            "email": "christianortloff1@gmail.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.0"
+    }
+}
