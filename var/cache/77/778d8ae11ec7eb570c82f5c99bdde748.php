@@ -70,7 +70,7 @@ class __TwigTemplate_844af027482b80f3ec72c2bb632a2315 extends Template
     </p>
     <form method=\"post\" action=\"Library\">
         <div class=\"form-group row\">
-            <label for=\"selectCommand\" class=\"col-2 text-right\">SELECT </label>
+            <label for=\"selectCommand\" class=\"col-2 col-form-label text-right\">SELECT </label>
             <input type=\"text\" class=\"form-control col-10\" name=\"selectCommand\" id=\"selectCommand\" value=\"";
         // line 22
         echo twig_escape_filter($this->env, ($context["stmt"] ?? null), "html", null, true);
@@ -134,7 +134,7 @@ class __TwigTemplate_844af027482b80f3ec72c2bb632a2315 extends Template
     </p>
     <form method=\"post\" action=\"Library\">
         <div class=\"form-group row\">
-            <label for=\"selectCommand\" class=\"col-2 text-right\">SELECT </label>
+            <label for=\"selectCommand\" class=\"col-2 col-form-label text-right\">SELECT </label>
             <input type=\"text\" class=\"form-control col-10\" name=\"selectCommand\" id=\"selectCommand\" value=\"{{stmt}}\">
         </div>
         <div class=\"text-right\">

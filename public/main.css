@@ -46,11 +46,14 @@ section#intro .card
 {
     background-color:  #ededed;
 }
-
+.table .thead-dark th{
+    background-color: #ee0290;
+    border-color: #ee0290bd;
+}
 section#autors  .card 
 {
     background-color: #ee0290;
-    
+    border-radius: 5px;
 }
 section#autors  .card-title {
     color:#fff;
@@ -76,6 +79,13 @@ section#autors  .card-body {
     color: #ffd ;
     background-color: #ee0290;
     border-color: #ee0290;
+  }
+  a {
+    color:  #ee0290;
+  }
+  a:hover {
+    color:  #ee0290;
+    filter:brightness(75%);
   }
   
   
