@@ -1,11 +1,32 @@
 <?php
-$db_user = 'root';
-$db_name = 'theDatabse';
-$db_passwort = 'root';
 
+namespace App\lf8;
 
-$nav = array(
-    array('href'=> 'Index','caption'=>'Home'),
-    array('href'=> 'Library','caption'=>'Library'),
-    array('href'=> 'Datamanager', 'caption' => 'Datenbank'));
+$db=[
+    'user' => 'root',
+    'name' => 'theDatabse',
+    'passwort' => 'root'
+];
+
+$nav = [
+    ['href'=> 'Index','caption'=>'Home'],
+    ['href'=> 'Library','caption'=>'Library'],
+    ['href'=> 'Datamanager', 'caption' => 'Datenbank']
+];
+
+$routes = [
+    '/' => 'IndexController',
+    'index' => 'IndexController',
+    'library' => 'LibraryController',
+    'datamanager' => 'DatamanagerController'
+];
+
+$config = [
+    'db' => $db,
+    'nav' => $nav,
+    'routes' => $routes
+];
+
+// var_dump($config);
+
 ?>

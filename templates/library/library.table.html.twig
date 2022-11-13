@@ -1,0 +1,24 @@
+
+{% for table in tables %}
+    <h2>{{table['name']}}</h2>
+    <div class="table-responsive">
+        <table class="table">
+        <thead class="thead-dark">
+            <tr>
+            {% for head in table['columns'] %}
+                <th>{{ head }}</th>
+            {% endfor %}
+            </tr>
+        </thead>
+            {% for row in table['rows'] %}
+                <tr>
+                    {% for r in row %}
+                    <td>{{r}}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <hr>
+{% endfor %}
+

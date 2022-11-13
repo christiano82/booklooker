@@ -19,12 +19,25 @@ class Router
             return '/';
         }
         
-        $path = $parts[1];//implode('/', $parts);
+        // $path = $parts[1];//implode('/', $parts);
+        $path = implode('/',$parts);
         if (($position = strpos($path, '?')) !== FALSE)
         {
             $path = substr($path, 0, $position);
         }
         return $path;
+    }
+    public function routeStatic(array $config) 
+    {
+        $path = $this->request_path();
+        if(isset($config['routes'][strtolower($path)])) 
+        {
+            $class = $config['routes'][strtolower($path)];
+            $className = '\\'.__NAMESPACE__.'\\'. $class;
+            $class = new $className();
+            $class->setup($config['nav']);
+            $class->build();
+        }
     }
     public function route() 
     {
@@ -40,8 +53,7 @@ class Router
             self::error_page("Somthing went wrong on $path <br>FILE NOT FOUND");
         } 
         require_once('config.php');
-        require_once ($fileName);
-        $class = self::NAMESPACE . $path . self::CONTROLLER;
+        $class = '\\'.__NAMESPACE__.'\\'. $path . self::CONTROLLER;
         $index = new $class();
         if(!is_subclass_of($index,self::NAMESPACE . self::BASE_CONTROLLER))
         {
@@ -49,7 +61,6 @@ class Router
         }
         $index->setup($nav);
         $index->build();
-        echo $index->render();
     }
     private function error_page($message) 
     {

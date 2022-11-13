@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Datamanager{% endblock %}
+
+{% block content %}
+    <ul class="nav">
+    <li class="nav-item">
+        <a class="nav-link active" href="?tblid=buecher">Active</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link disabled">Disabled</a>
+    </li>
+    </ul>
+    <h1>Datamanager</h1>
+    <p class="important">
+        Welcome on my awesome homepage.
+    </p>
+    {% include template ignore missing %}
+{% endblock %}

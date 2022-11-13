@@ -1,40 +1,17 @@
 <?php
 namespace App\lf8;
+// use App\lf8\AbstractController;
+// require __DIR__ .'/AbstractController.php';
 
-require __DIR__ .'/AbstractController.php';
-
-class IndexController extends AbstractController 
+class IndexController extends AbstractViewController 
 {
-    private $_command;
-    private $_nav;
-    
-    public function setup($nav) 
+    function view() 
     {
-        parent::__construct();
-        $this->_nav = $nav;
-        $this->_command = $this->getGet('command');
+        $this->default();
     }
-
-    public function build() 
+    function default()
     {
-        switch($this->_command) {
-            case 'create':
-                break;
-            case 'read':
-                break;
-            case 'update':
-                break;
-            case 'delete':
-                break;
-            default:
-                echo $this->_command;
-                break;
-        }
-    }
-
-    public function render() 
-    {
-        echo $this->_twig->render('index.html.twig',['nav'=>$this->_nav]);
+        echo $this->render('index.html.twig',['nav'=>$this->_nav]);
     }
 }
 ?>
