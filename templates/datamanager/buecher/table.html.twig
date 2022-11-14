@@ -1,4 +1,3 @@
-
 {% for table in tables %}
     <h2>{{table['name']}}</h2>
     <div class="table-responsive">
@@ -15,7 +14,7 @@
                     {% for r in row %}
                     <td>
                         {% if loop.first %}
-                            {{r}} <a href="{{r}}">Edit</a>|<a href="{{r}}">Delete</a>
+                            {{r}} <a href="?command=update&tblId={{table['name']}}&id={{r}}">Edit</a>|<a href="?command=delete&tblId={{table['name']}}&id={{r}}">Delete</a>
                         {% else %}
                             {{r}}
                         {% endif %}
@@ -27,4 +26,3 @@
     </div>
     <hr>
 {% endfor %}
-

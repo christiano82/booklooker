@@ -76,24 +76,64 @@ class __TwigTemplate_26b3f043cdf5650a557e1dbad9c3b14a extends Template
                 // line 15
                 $context['_parent'] = $context;
                 $context['_seq'] = twig_ensure_traversable($context["row"]);
+                $context['loop'] = [
+                  'parent' => $context['_parent'],
+                  'index0' => 0,
+                  'index'  => 1,
+                  'first'  => true,
+                ];
+                if (is_array($context['_seq']) || (is_object($context['_seq']) && $context['_seq'] instanceof \Countable)) {
+                    $length = count($context['_seq']);
+                    $context['loop']['revindex0'] = $length - 1;
+                    $context['loop']['revindex'] = $length;
+                    $context['loop']['length'] = $length;
+                    $context['loop']['last'] = 1 === $length;
+                }
                 foreach ($context['_seq'] as $context["_key"] => $context["r"]) {
                     // line 16
-                    echo "                    <td>";
-                    echo twig_escape_filter($this->env, $context["r"], "html", null, true);
-                    echo "</td>
+                    echo "                    <td>
+                        ";
+                    // line 17
+                    if (twig_get_attribute($this->env, $this->source, $context["loop"], "first", [], "any", false, false, false, 17)) {
+                        // line 18
+                        echo "                            ";
+                        echo twig_escape_filter($this->env, $context["r"], "html", null, true);
+                        echo " <a href=\"";
+                        echo twig_escape_filter($this->env, $context["r"], "html", null, true);
+                        echo "\">Edit</a>|<a href=\"";
+                        echo twig_escape_filter($this->env, $context["r"], "html", null, true);
+                        echo "\">Delete</a>
+                        ";
+                    } else {
+                        // line 20
+                        echo "                            ";
+                        echo twig_escape_filter($this->env, $context["r"], "html", null, true);
+                        echo "
+                        ";
+                    }
+                    // line 22
+                    echo "                    </td>
                     ";
+                    ++$context['loop']['index0'];
+                    ++$context['loop']['index'];
+                    $context['loop']['first'] = false;
+                    if (isset($context['loop']['length'])) {
+                        --$context['loop']['revindex0'];
+                        --$context['loop']['revindex'];
+                        $context['loop']['last'] = 0 === $context['loop']['revindex0'];
+                    }
                 }
                 $_parent = $context['_parent'];
                 unset($context['_seq'], $context['_iterated'], $context['_key'], $context['r'], $context['_parent'], $context['loop']);
                 $context = array_intersect_key($context, $_parent) + $_parent;
-                // line 18
+                // line 24
                 echo "                </tr>
             ";
             }
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['row'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 20
+            // line 26
             echo "        </table>
     </div>
     <hr>
@@ -102,7 +142,7 @@ class __TwigTemplate_26b3f043cdf5650a557e1dbad9c3b14a extends Template
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['table'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 24
+        // line 30
         echo "
 ";
     }
@@ -119,7 +159,7 @@ class __TwigTemplate_26b3f043cdf5650a557e1dbad9c3b14a extends Template
 
     public function getDebugInfo()
     {
-        return array (  106 => 24,  97 => 20,  90 => 18,  81 => 16,  77 => 15,  74 => 14,  70 => 13,  66 => 11,  57 => 9,  53 => 8,  44 => 3,  40 => 2,  37 => 1,);
+        return array (  146 => 30,  137 => 26,  130 => 24,  115 => 22,  109 => 20,  99 => 18,  97 => 17,  94 => 16,  77 => 15,  74 => 14,  70 => 13,  66 => 11,  57 => 9,  53 => 8,  44 => 3,  40 => 2,  37 => 1,);
     }
 
     public function getSourceContext()
@@ -139,7 +179,13 @@ class __TwigTemplate_26b3f043cdf5650a557e1dbad9c3b14a extends Template
             {% for row in table['rows'] %}
                 <tr>
                     {% for r in row %}
-                    <td>{{r}}</td>
+                    <td>
+                        {% if loop.first %}
+                            {{r}} <a href=\"{{r}}\">Edit</a>|<a href=\"{{r}}\">Delete</a>
+                        {% else %}
+                            {{r}}
+                        {% endif %}
+                    </td>
                     {% endfor %}
                 </tr>
             {% endfor %}

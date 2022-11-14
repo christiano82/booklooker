@@ -56,28 +56,34 @@ class __TwigTemplate_3665dad778053bac2b8e7be0446c6b09 extends Template
         $macros = $this->macros;
         // line 6
         echo "    <ul class=\"nav\">
-    <li class=\"nav-item\">
-        <a class=\"nav-link active\" href=\"?tblid=buecher\">Active</a>
-    </li>
-    <li class=\"nav-item\">
-        <a class=\"nav-link\" href=\"#\">Link</a>
-    </li>
-    <li class=\"nav-item\">
-        <a class=\"nav-link\" href=\"#\">Link</a>
-    </li>
-    <li class=\"nav-item\">
-        <a class=\"nav-link disabled\">Disabled</a>
-    </li>
+        <li class=\"nav-item\">
+            <a class=\"nav-link active\" href=\"?command=read&tblid=buecher\">Bücher</a>
+        </li>
+        <li class=\"nav-item\">
+            <a class=\"nav-link\" href=\"?command=read&tblid=Autoren\">Autoren</a>
+        </li>
+        <li class=\"nav-item\">
+            <a class=\"nav-link\" href=\"?command=read&tblid=Lieferanten\">Lieferanten</a>
+        </li>
+        <li class=\"nav-item\">
+            <a class=\"nav-link\" href=\"?command=read&tblid=Sparten\">Sparten</a>
+        </li>
+        <li class=\"nav-item\">
+            <a class=\"nav-link\" href=\"?command=read&tblid=Orte\">Orte</a>
+        </li>
+                <li class=\"nav-item\">
+            <a class=\"nav-link\" href=\"?command=read&tblid=Verlage\">Verlage</a>
+        </li>
     </ul>
     <h1>Datamanager</h1>
     <p class=\"important\">
         Welcome on my awesome homepage.
     </p>
     ";
-        // line 24
+        // line 30
         $__internal_compile_0 = null;
         try {
-            $__internal_compile_0 =             $this->loadTemplate(($context["template"] ?? null), "datamanager.html.twig", 24);
+            $__internal_compile_0 =             $this->loadTemplate(($context["template"] ?? null), "datamanager.html.twig", 30);
         } catch (LoaderError $e) {
             // ignore missing template
         }
@@ -98,7 +104,7 @@ class __TwigTemplate_3665dad778053bac2b8e7be0446c6b09 extends Template
 
     public function getDebugInfo()
     {
-        return array (  78 => 24,  58 => 6,  54 => 5,  47 => 3,  36 => 1,);
+        return array (  84 => 30,  58 => 6,  54 => 5,  47 => 3,  36 => 1,);
     }
 
     public function getSourceContext()
@@ -109,18 +115,24 @@ class __TwigTemplate_3665dad778053bac2b8e7be0446c6b09 extends Template
 
 {% block content %}
     <ul class=\"nav\">
-    <li class=\"nav-item\">
-        <a class=\"nav-link active\" href=\"?tblid=buecher\">Active</a>
-    </li>
-    <li class=\"nav-item\">
-        <a class=\"nav-link\" href=\"#\">Link</a>
-    </li>
-    <li class=\"nav-item\">
-        <a class=\"nav-link\" href=\"#\">Link</a>
-    </li>
-    <li class=\"nav-item\">
-        <a class=\"nav-link disabled\">Disabled</a>
-    </li>
+        <li class=\"nav-item\">
+            <a class=\"nav-link active\" href=\"?command=read&tblid=buecher\">Bücher</a>
+        </li>
+        <li class=\"nav-item\">
+            <a class=\"nav-link\" href=\"?command=read&tblid=Autoren\">Autoren</a>
+        </li>
+        <li class=\"nav-item\">
+            <a class=\"nav-link\" href=\"?command=read&tblid=Lieferanten\">Lieferanten</a>
+        </li>
+        <li class=\"nav-item\">
+            <a class=\"nav-link\" href=\"?command=read&tblid=Sparten\">Sparten</a>
+        </li>
+        <li class=\"nav-item\">
+            <a class=\"nav-link\" href=\"?command=read&tblid=Orte\">Orte</a>
+        </li>
+                <li class=\"nav-item\">
+            <a class=\"nav-link\" href=\"?command=read&tblid=Verlage\">Verlage</a>
+        </li>
     </ul>
     <h1>Datamanager</h1>
     <p class=\"important\">
