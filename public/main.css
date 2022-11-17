@@ -1,14 +1,18 @@
+body 
+{
+    font-family: 'Noto Sans', sans-serif;
+}
 header {
     position: relative;
     text-align: center;
     color: white;
     font-size: 3rem;
     /* margin-bottom: 3rem; */
-    background: linear-gradient(to top, #ee0290, #9907facc);
+    background: linear-gradient(to top, #6425d2, #9907facc);
     opacity: 0.7;
 }
 .navbar {
-    background-color: #ee0290;
+    background-color: #6425d2;
     
 }
 .navbar-toggler-icon {
@@ -44,15 +48,25 @@ header img
 }
 section#intro .card 
 {
-    background-color:  #ededed;
+    background-color:  #fff;
+}
+section#intro .card.intro
+{
+    background-color:  #9b56ff;
+    height:100%;
+    min-height:400px;
+}
+.card.intro h1 
+{
+    color:#fff;
 }
 .table .thead-dark th{
-    background-color: #ee0290;
-    border-color: #ee0290bd;
+    background-color: #6425d2;
+    border-color: #6425d2bd;
 }
 section#autors  .card 
 {
-    background-color: #ee0290;
+    background-color: #6425d2;
     border-radius: 5px;
 }
 section#autors  .card-title {
@@ -65,27 +79,50 @@ section#autors  .card-body {
 
 .btn-primary{
     color: #fff ;
-    background-color: #ee0290;
-    border-color: #ee0290;
+    background-color: #6425d2;
+    border-color: #6425d2;
   }
   
   .btn-primary:focus, .btn-primary:hover{
     color: #ffd ;
-    background-color: #ee0290;
-    border-color: #ee0290;
+    background-color: #6425d2;
+    border-color: #6425d2;
     filter:brightness(75%);
   }
   .btn-primary:not(:disabled):not(.disabled):active {
     color: #ffd ;
-    background-color: #ee0290;
-    border-color: #ee0290;
+    background-color: #6425d2;
+    border-color: #6425d2;
   }
   a {
-    color:  #ee0290;
+    color:  #6425d2;
   }
   a:hover {
-    color:  #ee0290;
+    color:  #6425d2;
     filter:brightness(75%);
+  }
+
+  .card.wwu 
+  {
+    background-color: #6425d2;
+    height:100%;
+    min-height:400px;
+  }
+  .card.wwu h1
+  {
+    color:#fff;
+    
+  }
+  ul.nav {
+    background-color: #9b56ff;
+    
+  }
+  ul.nav a {
+    color:#fff;
+  }
+  ul.nav a.nav-link.text-muted
+  {
+    color:#fff !important;
   }
   
   

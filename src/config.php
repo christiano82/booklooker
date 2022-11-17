@@ -4,8 +4,10 @@ namespace App\lf8;
 
 $db=[
     'user' => 'root',
-    'name' => 'theDatabse',
-    'passwort' => 'root'
+    'name' => 'buchladen',
+    'port' => 3306,
+    'password' => '',
+    'host' => 'localhost'
 ];
 
 $nav = [

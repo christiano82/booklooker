@@ -9,6 +9,7 @@ class AbstractBaseController
     protected $_command;
     protected $_nav;
     protected $_twig;
+    protected $_config;
     function __construct()
     {
         $loader = new FilesystemLoader('../templates');
@@ -16,9 +17,10 @@ class AbstractBaseController
             'cache' => '../var/cache','debug'=>true
         ]);
     }
-    public function setup($nav) 
+    public function setup($config) 
     {
-        $this->_nav = $nav;
+        $this->_nav = $config['nav'];
+        $this->_config = $config;
         $this->_command = $this->getGet('command');
         if($this->_command == null) 
         {

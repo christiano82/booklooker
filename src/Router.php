@@ -7,7 +7,7 @@ class Router
     private const CONTROLLER = 'Controller';
     private const INDEX = 'Index';
     
-    private const BASE_CONTROLLER = 'AbstractController';
+    private const BASE_CONTROLLER = 'AbstractBaseController';
 
     private function request_path()
     {
@@ -35,31 +35,24 @@ class Router
             $class = $config['routes'][strtolower($path)];
             $className = '\\'.__NAMESPACE__.'\\'. $class;
             $class = new $className();
-            $class->setup($config['nav']);
+            $class->setup($config);
             $class->build();
         }
     }
-    public function route() 
+    public function route(array $config) 
     {
         $path = $this->request_path();
         if($path === '/') 
         {
             $path=self::INDEX;
         }
-        $file = $path . self::CONTROLLER. '.php';
-        $fileName = self::file_exists(__DIR__ . '/' . $file,false);
-        if(!$fileName)
-        {
-            self::error_page("Somthing went wrong on $path <br>FILE NOT FOUND");
-        } 
-        require_once('config.php');
         $class = '\\'.__NAMESPACE__.'\\'. $path . self::CONTROLLER;
         $index = new $class();
         if(!is_subclass_of($index,self::NAMESPACE . self::BASE_CONTROLLER))
         {
             self::error_page("Somthing went wrong on $path<br>Class must extend AbstractController");
         }
-        $index->setup($nav);
+        $index->setup($config);
         $index->build();
     }
     private function error_page($message) 
