@@ -6,9 +6,9 @@ class LibraryController extends AbstractCrudController
 
     private $_dbModel;
 
-    function __construct()
+    function __construct($config)
     {
-        parent::__construct();
+        parent::__construct($config);
         $this->_dbModel = new LibraryDatabaseModel($this->_config);
     }
     function create()

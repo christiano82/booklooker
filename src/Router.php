@@ -47,12 +47,12 @@ class Router
             $path=self::INDEX;
         }
         $class = '\\'.__NAMESPACE__.'\\'. $path . self::CONTROLLER;
-        $index = new $class();
+        $index = new $class($config);
         if(!is_subclass_of($index,self::NAMESPACE . self::BASE_CONTROLLER))
         {
             self::error_page("Somthing went wrong on $path<br>Class must extend AbstractController");
         }
-        $index->setup($config);
+        // $index->setup();
         $index->build();
     }
     private function error_page($message) 

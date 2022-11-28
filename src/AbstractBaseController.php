@@ -1,6 +1,5 @@
 <?php
 namespace App\lf8;
-require __DIR__ . '/../vendor/autoload.php';
 use \Twig\Loader\FilesystemLoader;
 use \Twig\Environment;
 
@@ -10,21 +9,35 @@ class AbstractBaseController
     protected $_nav;
     protected $_twig;
     protected $_config;
-    function __construct()
+    function __construct($config)
     {
+        $this->setup($config);
         $loader = new FilesystemLoader('../templates');
         $this->_twig = new Environment($loader, [
             'cache' => '../var/cache','debug'=>true
         ]);
     }
-    public function setup($config) 
+    private function setup($config) 
     {
         $this->_nav = $config['nav'];
         $this->_config = $config;
-        $this->_command = $this->getGet('command');
-        if($this->_command == null) 
+        $this->_command = $this->getRequestParameterValue('command');
+    }
+    /**
+     * @param parameter to get the value
+     * @return value for the paramter
+     */
+    protected function getRequestParameterValue(string $parameter) : ?string 
+    {
+        $method = $_SERVER['REQUEST_METHOD'];
+        switch($method) 
         {
-            $this->_command = $this->getPost('command');
+            case 'GET':
+                return $this->getGet($parameter);
+            case 'POST':
+                return $this->getPost($parameter);
+            default:
+                return null;
         }
     }
     protected function getGet(string $parameter) : ?string {
