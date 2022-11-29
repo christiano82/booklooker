@@ -3,7 +3,7 @@ namespace App\lf8;
 
 class Router 
 {
-    private const NAMESPACE = 'App\lf8\\';
+    private const NAMESPACE = 'App\lf8\controllers\\';
     private const CONTROLLER = 'Controller';
     private const INDEX = 'Index';
     
@@ -46,9 +46,9 @@ class Router
         {
             $path=self::INDEX;
         }
-        $class = '\\'.__NAMESPACE__.'\\'. $path . self::CONTROLLER;
+        $class = self::NAMESPACE. $path . self::CONTROLLER;
         $index = new $class($config);
-        if(!is_subclass_of($index,self::NAMESPACE . self::BASE_CONTROLLER))
+        if(!is_subclass_of($index,'App\lf8\\'. self::BASE_CONTROLLER))
         {
             self::error_page("Somthing went wrong on $path<br>Class must extend AbstractController");
         }

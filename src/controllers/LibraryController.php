@@ -1,6 +1,8 @@
 <?php
-namespace App\lf8;
+namespace App\lf8\controllers;
 
+use App\lf8\AbstractCrudController;
+use App\lf8\models\LibraryDatabaseModel;
 class LibraryController extends AbstractCrudController
 {
 

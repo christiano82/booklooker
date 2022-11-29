@@ -1,6 +1,7 @@
 <?php
-namespace App\lf8;
-// use App\lf8\AbstractController;
+namespace App\lf8\controllers;
+
+use App\lf8\AbstractViewController;
 // require __DIR__ .'/AbstractController.php';
 
 class IndexController extends AbstractViewController 
