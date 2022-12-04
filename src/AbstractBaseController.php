@@ -27,7 +27,7 @@ class AbstractBaseController
      * @param parameter to get the value
      * @return value for the paramter
      */
-    protected function getRequestParameterValue(string $parameter) : ?string 
+    protected function getRequestParameterValue(string $parameter) : string|array|null 
     {
         $method = $_SERVER['REQUEST_METHOD'];
         switch($method) 
@@ -40,14 +40,14 @@ class AbstractBaseController
                 return null;
         }
     }
-    protected function getGet(string $parameter) : ?string {
+    protected function getGet(string $parameter): string|array|null {
         if(isset($_GET[$parameter])
             && !empty($_GET[$parameter])) {
             return $_GET[$parameter];
         }
         return null;
     }
-    protected function getPost(string $parameter) : ?string {
+    protected function getPost(string $parameter) : string|array|null {
         if(isset($_POST[$parameter]) && !empty($_POST[$parameter])) {
             return trim($_POST[$parameter]);
         }

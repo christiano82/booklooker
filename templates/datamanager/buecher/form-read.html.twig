@@ -1,4 +1,4 @@
-<form>
+{# <form>
   <div class="form-group">
     <label for="exampleFormControlInput1">Email address</label>
     <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
@@ -27,4 +27,15 @@
     <label for="exampleFormControlTextarea1">Example textarea</label>
     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
   </div>
+</form> #}
+<form>
+{% for row in entry %}
+  {% for name,r in row %}
+  <div class="form-group">
+    <label for"{{name}}">{{name}}</label>
+    <input name="{{name}}" type = "text" class="form-control" value="{{r}}" disabled/>
+  </div>
+  {% endfor %}
+  <button class="btn btn-primary">Löschen</button>
+{% endfor %}
 </form>
