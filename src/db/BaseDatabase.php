@@ -17,6 +17,10 @@ class BaseDatabase
    * @var mysqli_result
    */
   protected $_result;
+  /**
+   * flag to indecate if the connection is already closed
+   * @var bool
+   */
   protected $_isClosed;
 
   public function __construct($dbConfig)
@@ -50,10 +54,7 @@ class BaseDatabase
     {
       $this->connect();
     } 
-    // else {
-      return $this->_connection;
-    //   return $this->_connection;
-    // }
+    return $this->_connection;
   }
 
   public function query(string $stmt) : mysqli_result | bool
@@ -106,20 +107,17 @@ class BaseDatabase
   {
     return array_keys($result[0]);
   }
-  public function readTables(array $tblNames) : array 
+
+  public function readAllTables(array $tblNames) : array 
   {
       $tables = array();
-      foreach($tblNames as $table)
+      foreach($tblNames as $tableName)
       {
-          $result = $this->_dbConnectId->query('SELECT * FROM buchladen.'.$table.';');
-          $resultArray = $result->fetch_all(MYSQLI_ASSOC);
-          $columns = array();
-          $columns = array_keys($resultArray[0]);
-          $tables[$table] = ['pk'=> 'diespalte','name'=>$table,'columns'=>$columns,'rows'=>$resultArray];
-          $result->free_result();
+          $tables[$tableName] = $this->readTable($tableName);
       }
       return $tables;
   }
+  
   public function isConnected() : bool 
   {
     return (is_resource($this->_connection) && (get_resource_type($this->_connection) === 'mysqli link'));

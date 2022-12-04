@@ -21,15 +21,6 @@ class LibraryController extends AbstractCrudController
         {
             return $this->default();
         }
-        /*
-        $mysqli = OpenCon();
-        $query = $mysqli->query($stmt);
-        $tables = array();
-        $resultArray = $query->fetch_all(MYSQLI_ASSOC);
-        $columns = array();
-        $columns = array_keys($resultArray[0]);
-        $tables['complex'] = ['name'=>$stmt,'columns'=>$columns,'rows'=>$resultArray];
-        */
         $tables = $this->_dbModel->readCustomSelect($stmt);
         echo $this->render('library.html.twig',[
             'nav'=>$this->_nav,
@@ -65,37 +56,10 @@ class LibraryController extends AbstractCrudController
     }
     function readTables(array $tblNames) : array 
     {
-        /*
-        $mysqli = OpenCon();
-        $tables = array();
-        foreach($tblNames as $table)
-        {
-            $result = $mysqli->query('SELECT * FROM buchladen.'.$table.';');
-            $resultArray = $result->fetch_all(MYSQLI_ASSOC);
-            $columns = array();
-            $columns = array_keys($resultArray[0]);
-            $tables[$table] = ['pk'=> 'diespalte','name'=>$table,'columns'=>$columns,'rows'=>$resultArray];
-            $result->free_result();
-        }
-        CloseCon($mysqli);
-        return $tables;
-        */
         return $this->_dbModel->readTables($tblNames);
     }
     function getTableNames() : array 
     {
-        /*
-        $mysqli = OpenCon();
-           
-        $result = $mysqli->query('show tables');
-        $tableNames=[];
-        while($names = $result->fetch_array()) 
-        {
-            array_push($tableNames,$names[0]); 
-        };
-        CloseCon($mysqli);
-        return $tableNames;
-        */
         return $this->_dbModel->getTableNames();
     }
 }

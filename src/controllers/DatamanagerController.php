@@ -2,21 +2,32 @@
 namespace App\lf8\controllers;
 
 use App\lf8\AbstractCrudController;
+use App\lf8\models\DatamanagerDatabaseModel;
 
-require_once(__DIR__ . '\..\Database.php');
+// require_once(__DIR__ . '\..\Database.php');
 
 class DatamanagerController extends AbstractCrudController 
 {
+    private $_dbModel;
+    private $_tableNames;
+
+    public function __construct($config)
+    {
+        parent::__construct($config);
+        $this->_dbModel = new DatamanagerDatabaseModel($config);
+        $this->_tableNames = $this->_dbModel->getTableNames();
+    }
 
     function create() {}
     function read() 
     {
         $tblid=$this->getGet('tblid');
-        if($tblid == 'buecher') {
-            $tables = $this->readTables([$tblid]);
-            echo $this->render('datamanager.html.twig',[
+        if(!empty($tblid)) {
+            $tables = $this->_dbModel->readAllTables([$tblid]);
+            echo $this->render('datamanager/datamanager.html.twig',[
                 'nav'=>$this->_nav,
                 'tables' => $tables,
+                'tableNames'=>$this->_tableNames,
                 'template'=>'datamanager/buecher/table.html.twig']);
         }
     }
@@ -24,7 +35,7 @@ class DatamanagerController extends AbstractCrudController
     function delete() {}
     function default() 
     {
-        echo parent::render('datamanager.html.twig',['nav'=>$this->_nav,'template'=>'']);
+        echo parent::render('datamanager/datamanager.html.twig',['nav'=>$this->_nav,'tableNames'=>$this->_tableNames,'template'=>'']);
     }
     function readTables(array $tblNames) : array 
     {

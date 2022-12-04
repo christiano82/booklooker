@@ -3,19 +3,12 @@
 {% block title %}Datamanager{% endblock %}
 
 {% block content %}
-    <ul class="nav">
-    <li class="nav-item">
-        <a class="nav-link active" href="?tblid=buecher">Active</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link disabled">Disabled</a>
-    </li>
+    <ul class="nav row">
+        {% for table in tableNames %}
+        <li class="nav-item">
+            <a class="nav-link" href="?command=read&tblid={{table}}">{{ table }}</a>
+        </li>
+        {% endfor %}
     </ul>
     <h1>Datamanager</h1>
     <p class="important">

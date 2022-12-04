@@ -18,14 +18,9 @@ class LibraryDatabaseModel extends BaseDatabase {
 
     function readTables(array $tblNames) : array 
     {
-
-        $tables = array();
-        foreach($tblNames as $table)
-        {
-            $tables[$table] = parent::readTable($table);
-        }
-        return $tables;
+        return $this->readAllTables($tblNames);
     }
+
     function readCustomSelect(string $stmt) : array 
     {
         parent::query($stmt);
