@@ -11,10 +11,10 @@
         </thead>
             {% for row in table['rows'] %}
                 <tr>
-                    {% for r in row %}
+                    {% for r in row['rrow'] %}
                     <td>
                         {% if loop.first %}
-                            <a href="?command=read&tblid={{table['name']}}&id={{r}}">{{r}}</a> <a href="?command=update&tblId={{table['name']}}&id={{r}}">Edit</a>|<a href="?command=delete&tblId={{table['name']}}&id={{r}}">Delete</a>
+                            <a href="?command=read&tblid={{table['name']}}&id={{row['pk']}}">{{r}}</a> <a href="?command=update&tblId={{table['name']}}&id={{r}}">Edit</a>|<a href="?command=delete&tblId={{table['name']}}&id={{row['pk']}}">Delete</a>
                         {% else %}
                             {{r}}
                         {% endif %}

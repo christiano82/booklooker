@@ -79,7 +79,7 @@ class BaseDatabase
     return $tableNames;
   }
 
-  public function getPrimaryKey(string $table) : array 
+  public function getPrimaryKeyColumns(string $table) : array 
   {
     $this->query('SHOW KEYS FROM ' . $table . ' WHERE Key_name = \'PRIMARY\'');
     $primaryKeyColumns=[];
@@ -91,16 +91,58 @@ class BaseDatabase
     return $primaryKeyColumns;
   }
 
+  public function getPrimaryKeyAsParameter(array $pk,array $row) : string
+  {
+    // pk contains the names of the pk column
+    if(count($pk) == 1) {
+      return $row[$pk[0]];
+    }
+    $pk_array = array();
+    foreach($pk as $value) 
+    {
+      array_push($pk_array,$row[$value]);
+    }
+    return implode("*",$pk_array);
+  }
+
+  public function getPrimaryKeyFromParameter(string $pkParam) : array | string 
+  {
+    if(str_contains($pkParam,"*")) 
+    {
+      return explode('*',$pkParam);
+    }
+    return $pkParam;
+  }
+
+  public function hasCompositeId(string $table) : bool 
+  {
+    if(count($this->getPrimaryKeyColumns($table)) > 1) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Read one full table from the database and return an array
+   * with the rows as result with the pks
+   * @param string $tableName
+   * @return array
+   */
   public function readTable(string $tableName) : array
   {
     $this->query('SELECT * FROM ' . $tableName);
     $result = $this->fetchAssoc();
-
+    $rows = array();
+    $pk = $this->getPrimaryKeyColumns($tableName);
+    foreach($result as $key => $row) {
+      $rows[$key]['pk'] = $this->getPrimaryKeyAsParameter($pk, $row);
+      $rows[$key]['rrow']  = $row;
+    }
     return array(
-      'pk'=> $this->getPrimaryKey($tableName),
+      'pk'=> $pk,
       'name'=>$tableName,
       'columns'=>$this->getColumns($result),
-      'rows'=>$result);
+      'rows'=>$rows);
   }
 
   public function getColumns(array $result) : array 
