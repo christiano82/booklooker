@@ -6,7 +6,7 @@
     <input name="{{name}}" type = "text" class="col-md-10 form-control" value="{{r}}" disabled/>
   </div>
   {% endfor %}
-  <a href="?command=delete&tblid={{tblid}}&id={{pk}}" class="btn btn-primary">Löschen</a>
-  <a href="?command=update&tblid={{tblid}}&id={{pk}}" class="btn btn-primary">Bearbeiten</a>
+  <button type="submit" class="btn btn-primary">Senden</button>
+  <a href="?command=update&tblid={{tblid}}&id={{pk}}" class="btn btn-primary">Abbrechen</a>
 {% endfor %}
 </form>

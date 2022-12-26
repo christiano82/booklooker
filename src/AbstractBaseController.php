@@ -21,7 +21,7 @@ class AbstractBaseController
     {
         $this->_nav = $config['nav'];
         $this->_config = $config;
-        $this->_command = $this->getRequestParameterValue('command');
+        $this->_command = $this->getGet('command');
     }
     /**
      * @param parameter to get the value
@@ -56,5 +56,9 @@ class AbstractBaseController
     protected function render(string $template,array $vars) 
     {
         return $this->_twig->render($template,$vars);
+    }
+    protected function getRequestMethod() 
+    {
+        return $_SERVER['REQUEST_METHOD'];
     }
 }
