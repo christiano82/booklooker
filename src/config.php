@@ -7,7 +7,8 @@ $db=[
     'name' => 'buchladen',
     'port' => 3306,
     'password' => '',
-    'host' => 'localhost'
+    'host' => 'localhost',
+    'sql.dump' => 'buchladen.sql'
 ];
 
 $nav = [

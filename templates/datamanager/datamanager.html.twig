@@ -9,10 +9,27 @@
             <a class="nav-link" href="?command=read&tblid={{table}}">{{ table }}</a>
         </li>
         {% endfor %}
+        <li class="nav-item">
+        <a class="nav-link" href="?command=resetDatabase">Reset Datenbank</a>
     </ul>
-    <h1>Datamanager</h1>
+    {% if info is not empty %}
+        <p class="alert alert-info">{{info}}</p>
+    {% endif %}
+    <h1 class="h1">Datenbank</h1>
     <p class="important">
-        Welcome on my awesome homepage.
+    Verwenden Sie diese Seite um die einzelnen Tabellen der Datenbank anzuzeigen. Die Tabellen werden in der Navigation angezeigt. Sollten Sie das Bedürfnis haben die Datenbank wiederherzustellen, benutzen sie den <span class="text-info">Reset Datenbank</span>
     </p>
+    <div class="card">
+        <div class="card-body mb-3">
+            <h2 class="card-title text-left">Tabellenansicht</h2>
+            <p class="card-text">Aus der Tabellen Ansicht heraus ist es möglich:
+            <ul>
+                <li>einen Eintrag anzuzeigen</li>
+                <li>einen Eintrag direkt zu editieren</li>
+                <li>einen Eintrag direkt zu löschen</li>
+            </ul>
+        </p>
+        </div>
+    </div>
     {% include template ignore missing %}
 {% endblock %}

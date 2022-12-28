@@ -10,6 +10,7 @@ class DatamanagerController extends AbstractCrudController
     // INS MODEL!!!
     private $_tableNames;
 
+    private $info;
     public function __construct($config)
     {
         parent::__construct($config);
@@ -39,12 +40,7 @@ class DatamanagerController extends AbstractCrudController
         $tblid=$this->getGet('tblid');
         $id = $this->getGet('id');
         if(!empty($tblid) && $this->_dbModel->tableExist($tblid) && empty($id)) {
-            $table = $this->_dbModel->readAllFromTbl($tblid);
-            echo $this->render('datamanager/datamanager.html.twig',[
-                'nav'=>$this->_nav,
-                'tables' => $table,
-                'tableNames'=>$this->_tableNames,
-                'template'=>'datamanager/buecher/table.html.twig']);
+            $this->readTables($tblid);
         } else if(!empty($tblid) && $this->_dbModel->tableExist($tblid)  && !empty($id)) {
             $entry = $this->_dbModel->readEntryFromTbl($tblid,$id);
             echo $this->render('datamanager/datamanager.html.twig',[
@@ -95,12 +91,27 @@ class DatamanagerController extends AbstractCrudController
     
     function default() 
     {
-        echo parent::render('datamanager/datamanager.html.twig',['nav'=>$this->_nav,'tableNames'=>$this->_tableNames,'template'=>'']);
+        // dirty but it works ... btw the best way is to have something like that:
+        // command=foo compiles to function foo
+        $info = $this->compileCustomCommand();
+        echo parent::render('datamanager/datamanager.html.twig',['nav'=>$this->_nav,'tableNames'=>$this->_tableNames,'template'=>'','info'=>$info]);
     }
-
-    function readTables(array $tblNames) : array 
+    function compileCustomCommand() : string | null {
+        if(isset($this->_command) && strtoupper($this->_command) == "RESETDATABASE") {
+            $this->_dbModel->resetDatabase();
+            return "Reseted Database .. ";
+        }
+        return null;
+    }
+    function readTables(string $tblid) 
     {
-        return array();
+        $table = $this->_dbModel->readAllFromTbl($tblid);
+        echo $this->render('datamanager/datamanager.html.twig',[
+            'nav'=>$this->_nav,
+            'tables' => $table,
+            'tableNames'=>$this->_tableNames,
+            'info'=>$this->info,
+            'template'=>'datamanager/buecher/table.html.twig']);
     }
     /**
      * Undocumented function
@@ -176,7 +187,16 @@ class DatamanagerController extends AbstractCrudController
      */
     private function saveUpdatedEntry($tblid,$id) 
     {
-
+        $this->info = "Ändern des Eintrags mit der ID:$id ... ";
+        $columns = $this->_dbModel->getColumnNames($tblid);
+        $row = $this->getPostDataArray($columns);
+        $f =  $this->_dbModel->updateEntry($tblid,$id,$row); 
+        if($f === false) {
+            $this->info .= "war nicht erfolgreich";
+        } else {
+            $this->info .= "war erfolgreich!";
+        }
+        $this->readTables($tblid);
     }
     /**
      * display the entry to delete
@@ -187,7 +207,12 @@ class DatamanagerController extends AbstractCrudController
      */
     private function deleteEntry($tblid,$id) 
     {
-
+        echo $this->render('datamanager/datamanager.html.twig',[
+            'nav'=>$this->_nav,
+            'tableNames'=>$this->_tableNames,
+            'message' => "Möchte es den Eintrag mit der $id von $tblid Löschen?",
+            'returnUrl' => "?command=read&tblid=$tblid&id=$id",
+            'template'=>'datamanager/buecher/form-save-delete.html.twig']);
     }
     /**
      * save the entry from the database
@@ -198,7 +223,14 @@ class DatamanagerController extends AbstractCrudController
      */
     private function saveDeleteEntry($tblid,$id)
     {
-
+        $this->info = "Löschen des Eintrags mit der ID:$id ... ";
+        $f =  $this->_dbModel->deleteEntry($tblid,$id); 
+        if($f === false) {
+            $this->info .= "war nicht erfolgreich";
+        } else {
+            $this->info .= "war erfolgreich!";
+        }
+        $this->readTables($tblid);
     }
     private function renderMessage($message,$returnUrl) 
     {

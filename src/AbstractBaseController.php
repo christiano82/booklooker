@@ -61,4 +61,23 @@ class AbstractBaseController
     {
         return $_SERVER['REQUEST_METHOD'];
     }
+    /**
+     * get the post data from key and store it assoziativ
+     *
+     * @param array $keys
+     * @return array
+     */
+    protected function getPostDataArray(array $keys) : array 
+    {
+        $postedArray = array();
+        foreach($keys as $key) 
+        {
+            $v = $this->getPost($key);
+            if(isset($v) && !empty($v)) 
+            {
+                $postedArray[$key] = $v;
+            }
+        }
+        return $postedArray;
+    }
 }

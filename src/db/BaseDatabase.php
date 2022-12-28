@@ -150,6 +150,22 @@ class BaseDatabase
     return array_keys($result[0]);
   }
 
+  /** 
+   * boa ist das eklig
+   */
+  public function getColumnNames(string $tblid) : array 
+  {
+    $sql = "SHOW COLUMNS FROM $tblid";
+    $this->query($sql);
+    $result = $this->fetchAssoc();
+    $cols = array();
+    foreach($result as $value) {
+      $cols[]=$value['Field'];
+    }
+
+    return $cols;
+  }
+
   public function readAllTables(array $tblNames) : array 
   {
       $tables = array();

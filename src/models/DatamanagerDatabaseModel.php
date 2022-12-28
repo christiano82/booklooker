@@ -27,7 +27,8 @@ class DatamanagerDatabaseModel extends BaseDatabase
      * @return array
      */
     public function readAll() : array { 
-       return array();}
+       return $this->readAllTables($this->getTableNames());
+    }
     /**
      * Undocumented function
      *
@@ -92,32 +93,122 @@ class DatamanagerDatabaseModel extends BaseDatabase
      * @param [type] $id
      * @return boolean
      */
-    public function deleteEntry($tblid,$id) : bool 
+    public function deleteEntry($tblid,$id) : bool | string
     {
-        return false;
+        $pkCol = $this->getPrimaryKeyColumns($tblid);
+        $pkId = $this->getPrimaryKeyFromParameter($id);
+        $stmt = "DELETE FROM $tblid WHERE ";
+        if(is_array($pkId)) 
+        {
+            foreach($pkCol as $key=>$value) 
+            {
+                if($key != 0) {
+                    $stmt .= " AND ";
+                }
+                $stmt .= " $value = $pkId[$key] ";
+            }
+        } else {
+            $stmt .= "$pkCol[0]=" . $pkId;
+        }
+        if($this->query($stmt)) {
+            return true;
+        }
+        return $this->_connection->error;
     }
     /**
      * update the entry with the given values from $row 
      * return true if updated otherwise false
      * @param [type] $tblid
      * @param [type] $id
-     * @param [type] $row
-     * @return boolean
+     * @param [type] $row assoziativ array with column=>postedValue
+     * @return boolean|string
      */
-    public function updateEntry($tblid,$id,$row) : bool 
+    public function updateEntry($tblid,$id,$row) : bool | string
     {
-        return false;
+        $pkCol = $this->getPrimaryKeyColumns($tblid);
+        $pkId = $this->getPrimaryKeyFromParameter($id);
+        $stmt = "UPDATE $tblid SET ";
+        $i = 0;
+        foreach($row as $key=>$value) 
+        {
+            if(!in_array($key,$pkCol,true)) {
+                if($i != 0) { $stmt .= ',';}
+                $i++;
+                $stmt .= " $key = '$value' ";
+            }
+            
+        }
+        $stmt .= " WHERE ";
+        if(is_array($pkId)) 
+        {
+            foreach($pkCol as $key=>$value) 
+            {
+                if($key != 0) {
+                    $stmt .= " AND ";
+                }
+                $stmt .= " $value = $pkId[$key] ";
+            }
+        } else {
+            $stmt .= "$pkCol[0]=" . $pkId;
+        }
+        echo $stmt;
+        if($this->query($stmt)) {
+            return true;
+        }
+        return $this->_connection->error;
     }
     /**
      * create an entry from the data in row
      * return the id if created 
      * @param [type] $tblid
      * @param [type] $row
-     * @return string
+     * @return string|int
      */
-    public function createEntry($tblid,$row) : string | bool
+    public function createEntry($tblid,$row) : string | int
     {
-        return "id";
+        $stmt = "INSERT INTO $tblid VALUES (";
+        foreach($row as $key=>$value) 
+        {
+            $stmt .= " $key = $value ";
+        }
+        $stmt .= ")";
+        if($this->query($stmt)) {
+            return $this->_connection->insert_id;
+        }
+        return $this->_connection->error;
+    }
+    /**
+     * reset the database
+     *
+     * @return void
+     */
+    public function resetDatabase() 
+    {
+        // Temporary variable, used to store current query
+        $templine = '';
+        // Read in entire file
+        //__DIR__ . '../../public/' .$this->_dbonfig['sql.dump']
+        $lines = file('../public/buchladen.sql');
+        // Loop through each line
+        foreach ($lines as $line)
+        {
+            
+            // Skip it if it's a comment
+            if (substr($line, 0, 2) == '--' || $line == '')
+                continue;
+
+            // Add this line to the current segment
+            $templine .= $line;
+            // If it has a semicolon at the end, it's the end of the query
+            if (substr(trim($line), -1, 1) == ';')
+            {
+                
+                // Perform the query
+                $this->query($templine);
+                // Reset temp variable to empty
+                $templine = '';
+            }
+        }
     }
 }
 ?>
