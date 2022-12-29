@@ -121,7 +121,15 @@ class DatamanagerController extends AbstractCrudController
      */
     private function createNewEntry($tblid) 
     {
-        $this->default();
+        if(!empty($tblid)) 
+        {
+            echo $this->render('datamanager/datamanager.html.twig',[
+                'nav'=>$this->_nav,
+                'tableNames'=>$this->_tableNames,
+                'tblid' => $tblid,
+                'entry' => $this->_dbModel->getColumnNames($tblid),
+                'template'=>'datamanager/buecher/form-create.html.twig']);
+        }
     }
     /**
      * Undocumented function
@@ -131,7 +139,19 @@ class DatamanagerController extends AbstractCrudController
      */
     private function saveNewEntry($tblid) 
     {
-
+        if(!empty($tblid)) 
+        {
+            $this->info = "Erstellen des Eintrags  ";
+            $columns = $this->_dbModel->getColumnNames($tblid);
+            $row = $this->getPostDataArray($columns);
+            $f = $this->_dbModel->createEntry($tblid,$row);
+            if($f) {
+                $this->info .= "war nicht erfolgreich";
+            } else {
+                $this->info .= " mit der ID: $f war erfolgreich "; 
+            }
+            $this->readTables($tblid);
+        }
     }
     /**
      * display the entry to edit
@@ -154,7 +174,6 @@ class DatamanagerController extends AbstractCrudController
             {
                 foreach($pk_column as $key=>$value) 
                 {
-                    echo $value . ":" .$pk_fromParameter[$key] . "<br>";
                     if($key == 0) 
                     {
                         $idWhere .= $value . "=" . $pk_fromParameter[$key];

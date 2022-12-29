@@ -5,8 +5,10 @@ use App\lf8\db\BaseDatabase;
 
 class DatamanagerDatabaseModel extends BaseDatabase
 {
+    private $_config;
     public function __construct($config)
     {
+        $this->_config = $config;
         parent::__construct($config['db']);
     }
     // MOVE TO BASE
@@ -131,12 +133,15 @@ class DatamanagerDatabaseModel extends BaseDatabase
         $i = 0;
         foreach($row as $key=>$value) 
         {
-            if(!in_array($key,$pkCol,true)) {
+            if(!$this->_config['settings']['pk.edit'] == false && !in_array($key,$pkCol,true)) {
                 if($i != 0) { $stmt .= ',';}
-                $i++;
+                $stmt .= " $key = '$value' ";
+            } else {
+                if($i != 0) { $stmt .= ',';}
                 $stmt .= " $key = '$value' ";
             }
-            
+            $i++;
+    
         }
         $stmt .= " WHERE ";
         if(is_array($pkId)) 
@@ -151,7 +156,6 @@ class DatamanagerDatabaseModel extends BaseDatabase
         } else {
             $stmt .= "$pkCol[0]=" . $pkId;
         }
-        echo $stmt;
         if($this->query($stmt)) {
             return true;
         }
@@ -166,12 +170,9 @@ class DatamanagerDatabaseModel extends BaseDatabase
      */
     public function createEntry($tblid,$row) : string | int
     {
-        $stmt = "INSERT INTO $tblid VALUES (";
-        foreach($row as $key=>$value) 
-        {
-            $stmt .= " $key = $value ";
-        }
-        $stmt .= ")";
+        $stmt = "INSERT INTO $tblid VALUES ('";
+        $stmt .= implode("','",$row);
+        $stmt .= "')";
         if($this->query($stmt)) {
             return $this->_connection->insert_id;
         }

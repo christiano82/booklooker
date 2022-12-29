@@ -4,7 +4,7 @@ namespace App\lf8\models;
 
 use App\lf8\db\BaseDatabase;
 
-class LibraryDatabaseModel extends BaseDatabase {
+class LibrarySearchDatabaseModel extends BaseDatabase {
 
     function __construct($config)
     {

@@ -11,10 +11,15 @@ $db=[
     'sql.dump' => 'buchladen.sql'
 ];
 
+$settings= [
+    'pk.edit'=>true
+];
+
 $nav = [
     ['href'=> 'Index','caption'=>'Home'],
-    ['href'=> 'Library','caption'=>'Library'],
-    ['href'=> 'Datamanager', 'caption' => 'Datenbank']
+    ['href'=> 'LibrarySearch','caption'=>'Suche'],
+    ['href'=> 'Datamanager', 'caption' => 'Datenbank'],
+    ['href'=> 'Library','caption' => 'Bücher']
 ];
 
 $routes = [
@@ -27,9 +32,9 @@ $routes = [
 $config = [
     'db' => $db,
     'nav' => $nav,
-    'routes' => $routes
+    'routes' => $routes,
+    'settings'=>$settings
 ];
 
-// var_dump($config);
 
 ?>

@@ -21,7 +21,16 @@ class AbstractBaseController
     {
         $this->_nav = $config['nav'];
         $this->_config = $config;
-        $this->_command = $this->getGet('command');
+        $this->_command = $this->getCommand();
+    }
+    protected function getCommand() 
+    {
+        $c = $this->getGet('command');
+        if($c == null ) 
+        {
+            $c = $this->getPost('command');
+        }
+        return $c;
     }
     /**
      * @param parameter to get the value

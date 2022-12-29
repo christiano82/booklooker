@@ -48,6 +48,7 @@ class Router
         }
         $class = self::NAMESPACE. $path . self::CONTROLLER;
         $index = new $class($config);
+        // echo $index;
         if(!is_subclass_of($index,'App\lf8\\'. self::BASE_CONTROLLER))
         {
             self::error_page("Somthing went wrong on $path<br>Class must extend AbstractController");

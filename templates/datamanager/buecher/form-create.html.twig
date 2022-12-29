@@ -1,0 +1,10 @@
+<form method="post">
+  {% for name in entry %}
+  <div class="form-group form-row">
+    <label for"{{name}}" class="col-md-2">{{name}}</label>
+    <input name="{{name}}" type = "text" class="col-md-10 form-control" placeholder="{{name}}"/>
+  </div>
+  {% endfor %}
+  <button type="submit" class="btn btn-primary">Senden</button>
+  <a href="?command=read&tblid={{tblid}}" class="btn btn-primary">Abbrechen</a>
+</form>

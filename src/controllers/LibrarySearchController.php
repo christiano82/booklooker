@@ -2,15 +2,16 @@
 namespace App\lf8\controllers;
 
 use App\lf8\AbstractCrudController;
-use App\lf8\models\LibraryDatabaseModel;
-class LibraryController extends AbstractCrudController
+use App\lf8\models\LibrarySearchDatabaseModel;
+class LibrarySearchController extends AbstractCrudController
 {
+
     private $_dbModel;
 
     function __construct($config)
     {
         parent::__construct($config);
-        $this->_dbModel = new LibraryDatabaseModel($this->_config);
+        $this->_dbModel = new LibrarySearchDatabaseModel($this->_config);
     }
     function create()
     {
@@ -21,11 +22,11 @@ class LibraryController extends AbstractCrudController
             return $this->default();
         }
         $tables = $this->_dbModel->readCustomSelect($stmt);
-        echo $this->render('library.html.twig',[
+        echo $this->render('librarySearch.html.twig',[
             'nav'=>$this->_nav,
             'tables' => $tables,
             'stmt' => $selectCommand,
-            'template'=>'library/library.table.html.twig']);
+            'template'=>'library/librarySearch.table.html.twig']);
     }
     function read()
     {
@@ -35,10 +36,10 @@ class LibraryController extends AbstractCrudController
             // 1. Tablenames
             $tableNames =$this->getTableNames();
             $tables = $this->readTables($tableNames);
-            echo $this->render('library.html.twig',[
+            echo $this->render('librarySearch.html.twig',[
                 'nav'=>$this->_nav,
                 'tables' => $tables,
-                'template'=>'library/library.table.html.twig']);
+                'template'=>'library/librarySearch.table.html.twig']);
         }
     }
     function update() 
