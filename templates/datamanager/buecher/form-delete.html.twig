@@ -1,4 +1,5 @@
-<form>
+<form method="post">
+<p>{{message}}</p>
 {% for row in entry %}
   {% for name,r in row %}
   <div class="form-group form-row">
@@ -7,6 +8,6 @@
   </div>
   {% endfor %}
   <button type="submit" class="btn btn-primary">Senden</button>
-  <a href="?command=update&tblid={{tblid}}&id={{pk}}" class="btn btn-primary">Abbrechen</a>
+  <a href="{{returnUrl}}" class="btn btn-primary">Abbrechen</a>
 {% endfor %}
 </form>

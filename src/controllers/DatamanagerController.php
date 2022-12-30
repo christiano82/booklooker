@@ -3,6 +3,7 @@ namespace App\lf8\controllers;
 
 use App\lf8\AbstractCrudController;
 use App\lf8\models\DatamanagerDatabaseModel;
+use Exception;
 
 class DatamanagerController extends AbstractCrudController 
 {
@@ -14,7 +15,12 @@ class DatamanagerController extends AbstractCrudController
     public function __construct($config)
     {
         parent::__construct($config);
-        $this->_dbModel = new DatamanagerDatabaseModel($config);
+        try {
+            $this->_dbModel = new DatamanagerDatabaseModel($config);
+        } catch (Exception $e) {
+            $this->renderMessage("Fehler beim herstellen einer Datenbankverbindung. $e","Index");
+            die();
+        }
         $this->_tableNames = $this->_dbModel->getTableNames();
     }
 
@@ -24,7 +30,7 @@ class DatamanagerController extends AbstractCrudController
         switch($this->getRequestMethod()) 
         {
             case 'GET':
-                // display an empty form for the tables
+                // display an empty form for the table
                 $this->createNewEntry($this->getGet('tblid'));
                 break;
             case 'POST':
@@ -43,7 +49,7 @@ class DatamanagerController extends AbstractCrudController
             $this->readTables($tblid);
         } else if(!empty($tblid) && $this->_dbModel->tableExist($tblid)  && !empty($id)) {
             $entry = $this->_dbModel->readEntryFromTbl($tblid,$id);
-            echo $this->render('datamanager/datamanager.html.twig',[
+            echo $this->render('datamanager.html.twig',[
                 'nav'=>$this->_nav,
                 'tableNames'=>$this->_tableNames,
                 'entry' => $entry,
@@ -80,6 +86,7 @@ class DatamanagerController extends AbstractCrudController
                 $this->deleteEntry($tblid,$id);
                 break;
             case 'POST':
+                echo "foo $tblid,$id";
                 // let model update this shit
                 // get the column names for this table from the post as value 
                 // let the mode update the entry 
@@ -94,7 +101,7 @@ class DatamanagerController extends AbstractCrudController
         // dirty but it works ... btw the best way is to have something like that:
         // command=foo compiles to function foo
         $info = $this->compileCustomCommand();
-        echo parent::render('datamanager/datamanager.html.twig',['nav'=>$this->_nav,'tableNames'=>$this->_tableNames,'template'=>'','info'=>$info]);
+        echo parent::render('datamanager.html.twig',['nav'=>$this->_nav,'tableNames'=>$this->_tableNames,'template'=>'','info'=>$info]);
     }
     function compileCustomCommand() : string | null {
         if(isset($this->_command) && strtoupper($this->_command) == "RESETDATABASE") {
@@ -106,7 +113,7 @@ class DatamanagerController extends AbstractCrudController
     function readTables(string $tblid) 
     {
         $table = $this->_dbModel->readAllFromTbl($tblid);
-        echo $this->render('datamanager/datamanager.html.twig',[
+        echo $this->render('datamanager.html.twig',[
             'nav'=>$this->_nav,
             'tables' => $table,
             'tableNames'=>$this->_tableNames,
@@ -123,10 +130,14 @@ class DatamanagerController extends AbstractCrudController
     {
         if(!empty($tblid)) 
         {
-            echo $this->render('datamanager/datamanager.html.twig',[
+            $pkColumns = $this->_dbModel->getPrimaryKeyColumns($tblid);
+            $pkEdit = count($pkColumns) > 1;
+            echo $this->render('datamanager.html.twig',[
                 'nav'=>$this->_nav,
                 'tableNames'=>$this->_tableNames,
                 'tblid' => $tblid,
+                'pkColumns' => $pkColumns,
+                'pkEdit' => $pkEdit,
                 'entry' => $this->_dbModel->getColumnNames($tblid),
                 'template'=>'datamanager/buecher/form-create.html.twig']);
         }
@@ -184,11 +195,15 @@ class DatamanagerController extends AbstractCrudController
             }
             $this->_dbModel->query("SELECT * FROM " . $tblid . " " . $idWhere);
             $entry = $this->_dbModel->fetchAssoc();
-            echo $this->render('datamanager/datamanager.html.twig',[
+            $pkColumns = $this->_dbModel->getPrimaryKeyColumns($tblid);
+            $pkEdit = count($pkColumns) > 1;
+            echo $this->render('datamanager.html.twig',[
                 'nav'=>$this->_nav,
                 'tableNames'=>$this->_tableNames,
                 'entry' => $entry,
                 'tblid' => $tblid,
+                'pkColumns' => $pkColumns,
+                'pkEdit' => $pkEdit,
                 'pk' => $id,
                 'template'=>'datamanager/buecher/form-edit.html.twig']);
         } 
@@ -226,12 +241,14 @@ class DatamanagerController extends AbstractCrudController
      */
     private function deleteEntry($tblid,$id) 
     {
-        echo $this->render('datamanager/datamanager.html.twig',[
+        $entry = $this->_dbModel->readEntryFromTbl($tblid,$id);
+        echo $this->render('datamanager.html.twig',[
             'nav'=>$this->_nav,
             'tableNames'=>$this->_tableNames,
+            'entry'=>$entry,
             'message' => "Möchte es den Eintrag mit der $id von $tblid Löschen?",
             'returnUrl' => "?command=read&tblid=$tblid&id=$id",
-            'template'=>'datamanager/buecher/form-save-delete.html.twig']);
+            'template'=>'datamanager/buecher/form-delete.html.twig']);
     }
     /**
      * save the entry from the database
@@ -254,7 +271,7 @@ class DatamanagerController extends AbstractCrudController
     private function renderMessage($message,$returnUrl) 
     {
         // something went wrong here
-        echo $this->render('datamanager/datamanager.html.twig',[
+        echo $this->render('datamanager.html.twig',[
             'nav'=>$this->_nav,
             'tableNames'=>$this->_tableNames,
             'message' => $message,

@@ -3,10 +3,12 @@
   {% for name,r in row %}
   <div class="form-group form-row">
     <label for"{{name}}" class="col-md-2">{{name}}</label>
-    <input name="{{name}}" type = "text" class="col-md-10 form-control" value="{{r}}"/>
+    <input name="{{name}}" type = "text" class="col-md-10 form-control" value="{{r}}" {% if (name in pkColumns) and (pkEdit != true) %}
+      disabled
+    {% endif %}/>
   </div>
   {% endfor %}
   <button type="submit" class="btn btn-primary">Senden</button>
-  <a href="?command=update&tblid={{tblid}}&id={{pk}}" class="btn btn-primary">Abbrechen</a>
+  <a href="?command=read&tblid={{tblid}}" class="btn btn-primary">Abbrechen</a>
 {% endfor %}
 </form>

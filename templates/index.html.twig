@@ -5,7 +5,7 @@
 {% block content %}
 <header class="row mb-4">
     <img src="header.jpg" width="100%"/>
-    <div class="centered">
+    <div class="centered text-monospace">
         BOOKLOOKER.
         <p>Eine Buchmachirgendwas Webseite</p>
     </div>
@@ -15,21 +15,28 @@
         <div class="col-sm-9">
             <div class="card">
                 <div class="card-body">
-                    <h2 class="card-title">Inhalt</h2>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                    <h2 class="card-title text-monospace"><b>Hallo Bücherwurm!</b></h2>
+                    <p class="card-text text-monospace">Du interessierst dich für Bücher? Dann WILLKOMMEN beim BOOKLOOKER</p>
+                    <p class="card-text text-monospace">Auf dieser Seite kannst du nach Büchern <b>SUCHEN</b>, einige Daten in einer <b>DATENBANK</b> 
+                    erfassen oder editieren und neue <b>BÜCHER</b> samt Autoren und Verlage zusammenführen.</p>
+                    <p class="card-text text-monospace">Diese Webseite umfasst ein Gemeinschaftsprojekt im Rahmen der Ausbildung zum Fachinformatiker. Die Autoren stellen sich auf der <b>INDEX</b> Seite vor.
+                    Hier erfährst du auch einige Randinformationen.</p>
+                    <p class="card-text text-monospace">Ganz im <b>ERNST</b> auch wenn wir <b>BÜCHER</b> lieben hat diese Seite keinen Anspruch auf Vollständigkeit. Sie dient zum Überprüfen der Programmierfähigkeiten der Autoren und soll sogar noch wachsen.</p>
+                    <p class="card-text text-monospace">Ob am Ende der Ausbildung hier eine <b>BILBLIOTHEK</b> gepflegt werden kann? <b>DAS WOLLEN WIR DOCH HOFFEN</b>
                 </div>
             </div>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-3  d-none d-sm-block">
         <div class="card intro">
-            <h1 class="display-3 m-auto">Intro</h1>
+            <h1 class="display-3 m-auto text-monospace">Intro</h1>
         </div>
     </div>
     
 </section>
+<hr>
 <section id="use" class="mb-4"> 
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-3 d-none d-sm-block">
             <div class="card wwu">
                 <h1 class="display-3 m-auto">What we use</h1>
             </div>
@@ -37,24 +44,33 @@
         <div class="col-sm-9">
             <div class="card">
                 <div class="card-body">
-                    <h2 class="card-title">Inhalt</h2>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                    <h2 class="card-title">Übersicht</h2>
+                    <p class="card-text"><h3>Natürlich nicht ohne Übersicht</h3></p>
+                    <p class="card-text">Um dir etwas mehr Verständnis zu geben was hier los ist, findest du hier die Aufgabenstellung und natürlich Informationen zu den Sachen die wir benutzen um das hier zu machen.</p>
+                    <p class="card-texr">Neben der Webseite, welche natürlich der Hauptteil dieser Aufgabe ist, kannst du in der Softwaredokumention eine detailierte Beschreibung einsehen, welche die Benutzung erklärt. Natürlich haben wir auch eine Installationanleitung. Und wenn du wirklich interesse hast schaust du bei Github vorbeit und "fork'st" das Projekt <b><i>pew pew</i></b></p> 
                     <dl class="row">
-                        <dt class="col-md-3">Twig</dt><dd class="col-md-9">Symfony Template. Zum trennen von PHP und HTML nutzen wir eine Template Engine die im Symfony System vorhanden ist. Hier wird dies ohne Symfony benutzt. Die Installation erfolgt über Composer.</dd>
+                        <dt class="col-md-3">Aufgabenstellung</dt><dd class="col-md-9"></dd> 
+                    </dl>
+                    <hr>
+                    <dl class="row">
+                        <dt class="col-md-3">Composer</dt><dd class="col-md-9">Kurz: ein <a href="https://getcomposer.org/">Buildtool für PHP</a>. Es erlaubt die Abhängkeiten des Projekts zu managen. Auch hilft Composer beim autoload der PHP Klassen</dd> 
+                        <dt class="col-md-3">Twig</dt><dd class="col-md-9"><a href="https://twig.symfony.com/">Symfony Template Enginge</a>. Zum trennen von PHP und HTML nutzen wir eine Template Engine die im Symfony System vorhanden ist. Hier wird dies ohne Symfony benutzt. Die Installation erfolgt über Composer.</dd>
                         <dt class="col-md-3">Buchladen.sql</dt><dd class="col-md-9">Die für diese Seite verwendete Datenbank wurde durch die Lehrkraft bereitgestellt.</dd>
-                        <dt class="col-md-3">PHP 8.2</dt><dd class="col-md-9">Symfony Template Engine Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet</dd>
-                        <dt class="col-md-3">Bootstrap 4.6</dt><dd class="col-md-9">Symfony Template Engine Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet</dd>
-                        <dt class="col-md-3">Color System</dt><dd class="col-md-9">Material Design <a href="https://m2.material.io/resources/color/#!/?view.left=0&view.right=0&primary.color=6425d2&secondary.color=E57373">Color Palatte</a>
+                        <dt class="col-md-3">PHP 8.2</dt><dd class="col-md-9"><a href="https://www.php.net/releases/8.2/en.php">PHP</a> in der aktuellen stabilen Version. Wir verwenden vor allem Namespaces um die Controller zu laden.</dd>
+                        <dt class="col-md-3">Bootstrap 4.6</dt><dd class="col-md-9"><a href="https://getbootstrap.com/docs/4.6/getting-started/introduction/">Wohl das bekanntest CSS Framework.</a> Easy to use.</dd>
+                        <dt class="col-md-3">Color System</dt><dd class="col-md-9">Material Design <a href="https://m2.material.io/resources/color/#!/?view.left=0&view.right=0&primary.color=6425d2&secondary.color=E57373">Color Palatte</a></dd>
+                        <dt class="col-md-3">Github</dt><dd class="col-md-9"><a href="https://github.com/christiano82/booklooker">Unser Repo auf Github</a>. Du möchtest mitmachen? Dann los!</dd>
                     </dl>
                 </div>
             </div>
         </div>
     </div>
 </section>
+<hr>
 <section id="autors" class=" w-100">
     <div class="cards">
-        <div class="row row-cols-3 g-3">
-            <div class="col">
+        <div class="row ">
+            <div class="col-sm-4 mb-3">
                 <div class="card">
                     <div class="card-body">
                     <img src="autor.jpg" class="card-img-top" alt="...">
@@ -63,7 +79,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col">
+            <div class="col-sm-4 mb-3">
                 <div class="card">
                     <div class="card-body">
                     <img src="niclas.jpg" style="" class="card-img-top img-fluid img-thumbnail img-rounded " alt="...">
@@ -72,7 +88,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col">
+            <div class="col-sm-4 mb-3">
                 <div class="card">
                     <div class="card-body">
                     <img src="jan.jpg" class="img-fluid img-thumbnail img-rounded card-img-top">

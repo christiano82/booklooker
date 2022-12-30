@@ -4,16 +4,19 @@ namespace App\lf8\models;
 
 use App\lf8\db\BaseDatabase;
 
-class LibrarySearchDatabaseModel extends BaseDatabase {
+class LibrarySearchDatabaseModel extends BaseDatabase
+{
+    private $_config;
 
     function __construct($config)
     {
+        $this->_config = $config;
         parent::__construct($config['db']);
     }
 
     function getTableNames() : array 
     {
-        return parent::getTableNames();
+        return $this->getTableNames();
     }
 
     function readTables(array $tblNames) : array 
@@ -23,11 +26,11 @@ class LibrarySearchDatabaseModel extends BaseDatabase {
 
     function readCustomSelect(string $stmt) : array 
     {
-        parent::query($stmt);
-        $results = parent::fetchAssoc();
+        $this->query($stmt);
+        $results = $this->fetchAssoc();
 
         $table = [];
-        $table['complex'] = ['complex'=>true,'name' => $stmt, 'columns' => parent::getColumns($results), 'rows' => $results];
+        $table['complex'] = ['complex'=>true,'name' => $stmt, 'columns' => $this->getColumns($results), 'rows' => $results];
         return $table;
     }
 }

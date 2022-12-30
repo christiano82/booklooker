@@ -3,6 +3,8 @@ namespace App\lf8\controllers;
 
 use App\lf8\AbstractCrudController;
 use App\lf8\models\LibrarySearchDatabaseModel;
+use Exception;
+
 class LibrarySearchController extends AbstractCrudController
 {
 
@@ -11,8 +13,13 @@ class LibrarySearchController extends AbstractCrudController
     function __construct($config)
     {
         parent::__construct($config);
-        $this->_dbModel = new LibrarySearchDatabaseModel($this->_config);
-    }
+        try {
+            $this->_dbModel = new LibrarySearchDatabaseModel($this->_config);
+        } catch(Exception $e) {
+            $this->renderMessage("Fehler bei der Datenbankanbindung $e","/public/LibrarySearch");
+            die();
+        }
+     }
     function create()
     {
         $selectCommand = $this->getPost('selectCommand');
@@ -52,7 +59,7 @@ class LibrarySearchController extends AbstractCrudController
     }
     function default() 
     {
-        echo $this->render('library.html.twig',['nav'=>$this->_nav,'template'=>'']);
+        echo $this->render('librarySearch.html.twig',['nav'=>$this->_nav,'template'=>'']);
     }
     function readTables(array $tblNames) : array 
     {
@@ -61,6 +68,11 @@ class LibrarySearchController extends AbstractCrudController
     function getTableNames() : array 
     {
         return $this->_dbModel->getTableNames();
+    }
+    function renderMessage($message,$returnUrl) 
+    {
+        echo $this->render('librarySearch.html.twig',['nav'=>$this->_nav,
+        'returnUrl'=>$returnUrl,'message'=> $message,'template'=>'library/message.html.twig']);
     }
 }
 ?>

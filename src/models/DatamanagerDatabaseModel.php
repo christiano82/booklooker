@@ -6,6 +6,7 @@ use App\lf8\db\BaseDatabase;
 class DatamanagerDatabaseModel extends BaseDatabase
 {
     private $_config;
+
     public function __construct($config)
     {
         $this->_config = $config;
@@ -56,7 +57,7 @@ class DatamanagerDatabaseModel extends BaseDatabase
         // find all pk_keys
         // check if the given id count matches the pk columns
         // build the where clause and assume that the first id is for the first pk key
-        // \O_i/
+        // \O_i/NULL
         $idWhere = 'WHERE ';
         // if(is_array($id) && count($pk_column)>1) #
         // {
@@ -171,8 +172,12 @@ class DatamanagerDatabaseModel extends BaseDatabase
     public function createEntry($tblid,$row) : string | int
     {
         $stmt = "INSERT INTO $tblid VALUES ('";
+        if(count($this->getPrimaryKeyColumns($tblid))<2) {
+            $stmt .= "0','"; 
+        }
         $stmt .= implode("','",$row);
         $stmt .= "')";
+        echo $stmt;
         if($this->query($stmt)) {
             return $this->_connection->insert_id;
         }
@@ -185,31 +190,19 @@ class DatamanagerDatabaseModel extends BaseDatabase
      */
     public function resetDatabase() 
     {
-        // Temporary variable, used to store current query
         $templine = '';
-        // Read in entire file
-        //__DIR__ . '../../public/' .$this->_dbonfig['sql.dump']
         $lines = file('../public/buchladen.sql');
-        // Loop through each line
         foreach ($lines as $line)
         {
-            
-            // Skip it if it's a comment
-            if (substr($line, 0, 2) == '--' || $line == '')
-                continue;
+            if (substr($line, 0, 2) == '--' || $line == '') continue;
 
-            // Add this line to the current segment
             $templine .= $line;
-            // If it has a semicolon at the end, it's the end of the query
             if (substr(trim($line), -1, 1) == ';')
             {
-                
-                // Perform the query
                 $this->query($templine);
-                // Reset temp variable to empty
                 $templine = '';
             }
         }
     }
 }
-?>
+?>NULL
