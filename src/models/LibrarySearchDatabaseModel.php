@@ -16,7 +16,7 @@ class LibrarySearchDatabaseModel extends BaseDatabase
 
     function getTableNames() : array 
     {
-        return $this->getTableNames();
+        return parent::getTableNames();
     }
 
     function readTables(array $tblNames) : array 

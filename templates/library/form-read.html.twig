@@ -1,0 +1,86 @@
+<form>
+<div class="card mb-3">
+<div class="card-body">
+  <h3 class="card-title">Buch</h3>
+    <p class="card-text">
+      <div class="form-group form-row border-bottom">
+        <label for"buecher_id" class="col-md-2 col-form-label "><a href="Datamanager?command=read&tblid=buecher&id={{entry['book']['buecher_id']}}">ID:</a></label>
+        <input name="buecher_id" type = "text" class="form-control-plaintext col-md-4 form-control-plaintext" value="{{entry['book']['buecher_id']}}" disabled/>
+        <label for"titel" class="col-md-2 col-form-label ">Titel:</label>
+        <input name="titel" type = "text" class="col-md-4 form-control-plaintext" value="{{entry['book']['titel']}}" disabled/>
+      </div>
+        <div class="form-group form-row border-bottom">
+        <label for"verkaufspreis" class="col-md-2 col-form-label ">Verkaufspreis:</label>
+        <input name="verkaufspreis" type = "text" class="col-md-4 form-control-plaintext" value="{{entry['book']['verkaufspreis']}}" disabled/>
+        <label for"einkaufspreis" class="col-md-2 col-form-label ">Einkaufspreis:</label>
+        <input name="einkaufspreis" type = "text" class="col-md-4 form-control-plaintext" value="{{entry['book']['einkaufspreis']}}" disabled/>
+      </div>
+        <div class="form-group form-row border-bottom">
+        <label for"erscheinungsjahr" class="col-md-2 col-form-label ">Erscheinungsjahr:</label>
+        <input name="erscheinungsjahr" type = "text" class="col-md-4 form-control-plaintext" value="{{entry['book']['erscheinungsjahr']}}" disabled/>
+      </div>
+    </p>
+  </div>
+</div>
+<div class="card mb-3">
+<div class="card-body">
+  <h3 class="card-title">Sparten</h3>
+   <p class="card-text">
+    <ul class="list-group list-group-horizontal">
+      {% for row in entry['sparten'] %}
+        <li class="list-group-item"><a href="Datamanager?command=read&tblid=sparten&id={{row['sparten_id']}}">{{row['bezeichnung']}}</a></li>
+      {% endfor %}
+    </ul>
+    </p>
+  </div>
+</div>
+<div class="card mb-3">
+<div class="card-body">
+  <h3 class="card-title">Autoren</h3>
+     <p class="card-text">
+      {% for row in entry['autoren'] %}
+          <div class="form-group form-row border-bottom">
+            <label for"vorname" class="col-md-2 col-form-label "><a href="Datamanager?command=read&tblid=autoren&id={{row['autoren_id']}}">Vorname:</a></label>
+            <input name="vorname" type = "text" class="col-md-2 form-control-plaintext" value="{{row['vorname']}}" disabled/>
+            <label for"nachname" class="col-md-2 col-form-label ">Nachname:</label>
+            <input name="nachname" type = "text" class="col-md-2 form-control-plaintext" value="{{row['nachname']}}" disabled/>
+            <label for"geburtsdatum" class="col-md-2 col-form-label ">Geburtsdatum:</label>
+            <input name="nachname" type = "date" class="col-md-2 form-control-plaintext" value="{{row['geburtsdatum']}}" disabled/>
+          </div>  
+      {% endfor %}
+    </p>
+  </div>
+</div>
+<div class="card mb-3">
+<div class="card-body">
+  <h3 class="card-title">Verlag</h3>
+   <p class="card-text">
+     <div class="form-group form-row border-bottom">
+      <label for"name" class="col-md-2 col-form-label "><a href="Datamanager?command=read&tblid=verlage&id={{entry['verlag']['verlage_id']}}">Verlagname</a></label>
+      <input name="name" type = "text" class="col-md-2 form-control-plaintext" value="{{entry['verlag']['name']}}" disabled/>
+      <label for"nachname" class="col-md-2 col-form-label "><a href="Datamanager?command=read&tblid=orte&id={{entry['verlag']['orte_id']}}">Ort</a></label>
+      <input name="nachname" type = "text" class="col-md-2 form-control-plaintext" value="{{entry['verlag']['ort']}}" disabled/>
+      <label for"geburtsdatum" class="col-md-2 col-form-label ">Postleitzahl</label>
+      <input name="nachname" type = "text" class="col-md-2 form-control-plaintext" value="{{entry['verlag']['postleitzahl']}}" disabled/>
+    </div>  
+    </p>
+  </div>
+</div>
+<div class="card mb-3">
+<div class="card-body">
+  <h3 class="card-title">Lieferanten</h3>
+     <p class="card-text">
+        {% for row in entry['lieferanten'] %}
+            <div class="form-group form-row border-bottom">
+              <label for"name" class="col-md-2 col-form-label "><a href="Datamanager?command=read&tblid=lieferanten&id={{row['lieferanten_id']}}">Name</a></label>
+              <input name="name" type = "text" class="col-md-2 form-control-plaintext" value="{{row['name']}}" disabled/>
+              <label for"ort" class="col-md-2 col-form-label "><a href="Datamanager?command=read&tblid=orte&id={{entry['verlag']['orte_id']}}">Ort</a></label>
+              <input name="ort" type = "text" class="col-md-2 form-control-plaintext" value="{{row['ort']}}" disabled/>
+              <label for"ort" class="col-md-2 col-form-label ">Postleitzahl</label>
+              <input name="ort" type = "text" class="col-md-2 form-control-plaintext" value="{{row['postleitzahl']}}" disabled/>
+            </div>  
+        {% endfor %}
+    </p>
+  </div>
+</div>
+</form>

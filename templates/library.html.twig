@@ -1,31 +1,36 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Library{% endblock %}
+{% block title %}Bücher{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <h1>Library</h1>
-    <p class="lead">
-        Welcome on my awesome homepage.
+    <h1>Bücher</h1>
+    <p class="lead text-monospace">
+        Willkommen in der Bücherei
     </p>
-    <p>Nutzen Sie die Eingabe um ein Select Satement zu formulieren. Dabei muss das 'Select' selbst nicht aufgeführt werden<p>
-    <p>Beispiele für ein Select
-        <ul>
-            <li><code>* from autoren a join autoren_has_buecher ahb on a.autoren_id = ahb.autoren_autoren_id join buecher b on ahb.buecher_buecher_id = b.buecher_id;</code></li>
-            <li><code>* from autoren;</code></li>
-            <li><code>* from buecher order by buecher_id desc;</code></li>
-        </ul>
-    </p>
-    <form method="post" action="Library">
-        <div class="form-group row">
-            <label for="selectCommand" class="col-2 col-form-label text-right">SELECT </label>
-            <input type="text" class="form-control col-10" name="selectCommand" id="selectCommand" value="{{stmt}}">
-        </div>
-        <div class="text-right">
-            <button type="submit" name="command" value="create" class="btn btn-primary">Submit</button>
-            <a href="Library?command=read&view=all" class="btn btn-primary">Alle</a>
-        </div>
-    </form>
+    <div class="card-i">
+        <p>Hier kannst du nach Büchern suchen.<p>
+        <p>Auch hast du die Möglichkeit
+            <ul>
+                <li>bestehende Bücher anzupassen</li>
+                <li>neue zu erfassen</li>
+                <li>nicht meher aktuelle zu löschen</li>
+            </ul>
+        </p>
+    </div>
+    <div class="container">
+        <form method="post" action="Library">
+            <div class="form-group form-row">
+                <label for="bookSelect" class="col-sm-3 col-form-label text-right">Buch:</label>
+                <select class="form-control col-sm-6" id="bookSelect" name="bookSelect">
+                    {% for item in books %}
+                        <option value="{{item['buecher_id']}}" {% if item['buecher_id'] == currentId %}
+                            selected {% endif %}>{{item['titel']}}</option>
+                    {% endfor %}
+                </select>
+                <button class="btn btn-primary col-sm-3" type="submit" name="command" value="read">Anzeigen</button>
+            </div>
+        </form>
+        {# <div style="min-height:50vh;"></div> #}
+    </container>
     {% include template ignore missing %}
-</div>
 {% endblock %}

@@ -45,6 +45,7 @@ class DatamanagerController extends AbstractCrudController
     {
         $tblid=$this->getGet('tblid');
         $id = $this->getGet('id');
+
         if(!empty($tblid) && $this->_dbModel->tableExist($tblid) && empty($id)) {
             $this->readTables($tblid);
         } else if(!empty($tblid) && $this->_dbModel->tableExist($tblid)  && !empty($id)) {
@@ -112,13 +113,62 @@ class DatamanagerController extends AbstractCrudController
     }
     function readTables(string $tblid) 
     {
+        $sort=$this->getGet('sort');
+        $sorttype=$this->getGet('sorttype');
         $table = $this->_dbModel->readAllFromTbl($tblid);
+        if($sort && $sorttype) 
+        {
+            $table[$tblid]['rows']= $this->selectionSort($table[$tblid]['rows'],$sort,$sorttype);
+            if($sorttype == 'ASC')  {
+                $sorttype='DESC' ;
+            }
+            else {
+                $sorttype = 'ASC';
+            }
+        }
+        $sorttype = $sorttype != null ? $sorttype : 'ASC';
         echo $this->render('datamanager.html.twig',[
             'nav'=>$this->_nav,
             'tables' => $table,
             'tableNames'=>$this->_tableNames,
-            'info'=>$this->info,
+            'info'=>$this->info,'sorttype'=>$sorttype,
             'template'=>'datamanager/buecher/table.html.twig']);
+    }
+    function selectionSort($data,$sort,$sorttype)
+    {
+        $n=count($data);//pk-rrow[key]
+        $nextSwap=null;     
+        $temp=null;
+    
+        for($i=0; $i<$n-1; $i++)
+        {
+               
+            $nextSwap=$i;
+            for($j=$i+1; $j<$n; $j++)
+            {
+                if($sorttype == 'ASC') {
+
+                    if( $data[$j]['rrow'][$sort]<$data[$nextSwap]['rrow'][$sort] ) 
+                    {
+                        $nextSwap=$j; 
+                    }
+                } else {
+                    if( $data[$j]['rrow'][$sort]>$data[$nextSwap]['rrow'][$sort] ) 
+                    {
+                        $nextSwap=$j; 
+                    }
+                }
+            }
+            $temp=$data[$i];
+            $data[$i]=$data[$nextSwap];
+            $data[$nextSwap]=$temp;
+        }
+    
+        return $data;
+    }
+    function sortTableByColumn($column,$sortytpe) 
+    {
+
     }
     /**
      * Undocumented function

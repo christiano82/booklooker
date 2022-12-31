@@ -14,31 +14,15 @@ class LibraryController extends AbstractCrudController
     }
     function create()
     {
-        $selectCommand = $this->getPost('selectCommand');
-        $stmt = 'SELECT '. $selectCommand;
-        if(empty($selectCommand )) 
-        {
-            return $this->default();
-        }
-        $tables = $this->_dbModel->readCustomSelect($stmt);
-        echo $this->render('library.html.twig',[
-            'nav'=>$this->_nav,
-            'tables' => $tables,
-            'stmt' => $selectCommand,
-            'template'=>'library/library.table.html.twig']);
     }
     function read()
     {
-        $view = $this->getGet('view');
-        if($view == 'all') 
+        switch($this->getRequestMethod())
         {
-            // 1. Tablenames
-            $tableNames =$this->getTableNames();
-            $tables = $this->readTables($tableNames);
-            echo $this->render('library.html.twig',[
-                'nav'=>$this->_nav,
-                'tables' => $tables,
-                'template'=>'library/library.table.html.twig']);
+            case 'GET':
+                $this->default();
+            case 'POST':
+                $this->readEntry();
         }
     }
     function update() 
@@ -51,7 +35,9 @@ class LibraryController extends AbstractCrudController
     }
     function default() 
     {
-        echo $this->render('library.html.twig',['nav'=>$this->_nav,'template'=>'']);
+        $books = $this->_dbModel->readBookSelect();
+        $currentId = count($books) > 0 ? $books[0]['buecher_id']:0;
+        echo $this->render('library.html.twig',['nav'=>$this->_nav,'template'=>'','books'=>$books,'currentId'=>$currentId]);
     }
     function readTables(array $tblNames) : array 
     {
@@ -60,6 +46,14 @@ class LibraryController extends AbstractCrudController
     function getTableNames() : array 
     {
         return $this->_dbModel->getTableNames();
+    }
+    function readEntry() 
+    {
+        $books = $this->_dbModel->readBookSelect();
+        $currentId = $this->getPost('bookSelect');
+        $entry = $this->_dbModel->getBookEntry($currentId);
+        echo $this->render('library.html.twig',['nav'=>$this->_nav,'template'=>'library/form-read.html.twig',
+        'entry'=>$entry,'books'=>$books,'currentId'=>$currentId]);
     }
 }
 ?>

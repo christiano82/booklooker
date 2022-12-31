@@ -39,24 +39,24 @@ header img
 .centered p {
     font-size: 1.5rem;
 }
-.card {
+.card-i {
     border:0px;
     border-radius: 0;
 }
 .card-title {
     text-align: center;
 }
-section#intro .card 
+section#intro .card-i 
 {
     background-color:  #fff;
 }
-section#intro .card.intro
+section#intro .card-i.intro
 {
     background-color:  #9b56ff;
     height:100%;
     min-height:400px;
 }
-.card.intro h1 
+.card-i.intro h1 
 {
     color:#fff;
 }

@@ -6,7 +6,7 @@
         <thead class="thead-dark">
             <tr>
             {% for head in table['columns'] %}
-                <th>{{ head }}</th>
+                <th><a href="?command=read&tblid={{table['name']}}&sort={{head}}&sorttype={{sorttype}}" style="color:white">{{ head }}</a></th>
             {% endfor %}
             </tr>
         </thead>
