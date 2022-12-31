@@ -177,7 +177,6 @@ class DatamanagerDatabaseModel extends BaseDatabase
         }
         $stmt .= implode("','",$row);
         $stmt .= "')";
-        echo $stmt;
         if($this->query($stmt)) {
             return $this->_connection->insert_id;
         }
@@ -205,4 +204,4 @@ class DatamanagerDatabaseModel extends BaseDatabase
         }
     }
 }
-?>NULL
+?>

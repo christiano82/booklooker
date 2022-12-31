@@ -296,7 +296,7 @@ class DatamanagerController extends AbstractCrudController
             'nav'=>$this->_nav,
             'tableNames'=>$this->_tableNames,
             'entry'=>$entry,
-            'message' => "Möchte es den Eintrag mit der $id von $tblid Löschen?",
+            'message' => "Eintrag mit der $id von $tblid löschen?",
             'returnUrl' => "?command=read&tblid=$tblid&id=$id",
             'template'=>'datamanager/buecher/form-delete.html.twig']);
     }
